@@ -44,8 +44,8 @@ We need to define all six of our stats and create some interfaces/typing around 
     
  This is very similar to what we've done above, but that last line, `[key: string]: AbilityScore`, is new. This is called an [index signature](https://www.typescriptlang.org/docs/handbook/2/objects.html#index-signatures) and it allows us to reference the index of the `AbilityScoreArray` object using the name of the property. Let's see an example.
  
- 	const abilityScoreArray: AbilityScoreArray = {
-    	Strength: abilityScore, // this assumes our varibale from above is still in scope!
+    const abilityScoreArray: AbilityScoreArray = {
+        Strength: abilityScore, // this assumes our varibale from above is still in scope!
         Dexterity: { score: 16, ability: "Dexterity" },
         Constitution: { score: 20, ability: "Constitution" },
         Intelligence: { score: 6, ability: "Intelligence" },
@@ -59,7 +59,7 @@ We need to define all six of our stats and create some interfaces/typing around 
 We now have a pretty cool type we can use for our Ability Scores. But we're playing Pathfinder2e (if not, you should be ;) ) and there are only ever those six scores allowed. However, as currently written, the following is valid TypeScript code:
 
 	const badAbilityScoreArray: AbilityScoreArray = {
-    	Strength: abilityScore, // this assumes our varibale from above is still in scope!
+        Strength: abilityScore, // this assumes our varibale from above is still in scope!
         Dexterity: { score: 16, ability: "NOT DEX!" },
         Constitution: { score: 20, ability: "Constitution" },
         Intelligence: { score: 6, ability: "Intelligence" },
