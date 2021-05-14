@@ -10,6 +10,7 @@ I'm just a dude that likes TTRPGs, coding, and teaching how to code! I work at a
 ### Contact me
 
 [mirkorainer@outlook.com](mailto:mirkorainer@outlook.com)
+
 [gary@codechief.dev](mailto:gary@codechief.dev)
 
 ### Site Icon
