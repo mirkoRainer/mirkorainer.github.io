@@ -61,8 +61,10 @@ function MakeCheck(
     checkType: string
 ): CheckOutcome {
     // Filter out any non-applicable Bonus/Penalties
-    const applicableBonuses = GetBonusesFor(checkType, bonuses);
-    const applicablePenalties = GetBonusesFor(checkType, penalties);
+      const applicableBonuses = GetBonusesFor(checkType, bonuses);
+      const applicablePenalties = GetBonusesFor(checkType, penalties);
+      const bonusTotal = 
+      const dieResults = RollD(20);
 }
 ```
 
