@@ -48,5 +48,21 @@ interface Bonus {
     source: string;
 }
 ```
-We now have Bonuses and Penalties covered, and since Modifiers don't require any special logic, we just be using the `number` primitive type for them.
+We now have Bonuses and Penalties covered, and since Modifiers don't require any special logic, we just be using the `number` primitive type for them. Let's define a rough template for our method.
+
+### MakeCheck Function
+
+We'll create a function called MakeCheck that takes in an array of Modifiers, and `Bonus`es. We'll also add the `checkType` parameter so we can use it to filter out any Bonuses that don't apply. You may not think we need this here but when creating an entire Player Character, it's much easier to store all your Bonuses in one place. 
+```ts
+function MakeCheck(
+    modifiers: number[],
+    bonuses: iBonus[],
+    penalties: iBonus[],
+    checkType: string
+): CheckOutcome {
+    // Filter out any non-applicable Bonus/Penalties
+    const applicableBonuses = GetBonusesFor(checkType, bonuses);
+    const applicablePenalties = GetBonusesFor(checkType, penalties);
+}
+```
 
