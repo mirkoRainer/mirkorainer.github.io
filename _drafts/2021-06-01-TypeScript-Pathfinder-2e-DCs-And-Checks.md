@@ -65,7 +65,7 @@ function MakeCheck(
       const applicableBonuses = GetBonusesFor(checkType, bonuses);
       const applicablePenalties = GetBonusesFor(checkType, penalties);
       const dieResults = RollD(20);
-      const modifiersTotal = modifiers.reduce((a, b) => a + b);
+      const modifiersTotal = modifiers.reduce((a, b) => a + b); // Add all the modifiers together. https://stackoverflow.com/questions/1230233/how-to-find-the-sum-of-an-array-of-numbers
       const calculatedResult =
           modifiersTotal +
           dieRoll +
@@ -74,4 +74,6 @@ function MakeCheck(
       return DetermineOutcome(calculatedResult, difficultyClass, dieRoll);
 }
 ```
+
+
 
