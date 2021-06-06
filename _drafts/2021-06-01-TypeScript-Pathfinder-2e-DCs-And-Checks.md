@@ -31,14 +31,8 @@ enum CheckOutcome {
     CriticalFailure = "Critical Failure",
 }
 ```
-We need a type to help us track Bonuses and Penalties. We won't cover the specifics of this logic in this post but another one will.
+We need a type to help us track Bonuses and Penalties of the various types.
 ```ts
-interface Bonus {
-    type: BonusType;
-    appliesTo: string;
-    amount: number;
-    source: string;
-}
 enum BonusType {
     Proficiency = "Proficiency",
     Circumstance = "Circumstance",
@@ -47,6 +41,13 @@ enum BonusType {
     Armor = "Armor", // derived from check and speed penalties in Armor rules
     Untyped = "Untyped",
 }
+// We call this a Bonus, but we'll be using it for Penalties too since a Penalty is just a Bonus with a negative value.
+interface Bonus {
+    type: BonusType;
+    appliesTo: string; // A key to determine if the Bonus applies to the check.
+    amount: number;
+    source: string;
+}
 ```
-
+We now have Bonuses and Penalties covered, and since Modifiers don't require any special logic, we just be using the `number` primitive type for them.
 
