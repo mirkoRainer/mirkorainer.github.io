@@ -58,12 +58,12 @@ function MakeCheck(
     modifiers: number[],
     bonuses: iBonus[],
     penalties: iBonus[],
-    checkType: string
+    checkType: string,
+     dc: number
 ): CheckOutcome {
     // Filter out any non-applicable Bonus/Penalties
       const applicableBonuses = GetBonusesFor(checkType, bonuses);
       const applicablePenalties = GetBonusesFor(checkType, penalties);
-      const bonusTotal = 
       const dieResults = RollD(20);
 }
 ```
