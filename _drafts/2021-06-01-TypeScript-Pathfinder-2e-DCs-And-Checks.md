@@ -20,8 +20,10 @@ From the [Core Rulebook pg. 443](https://2e.aonprd.com/Rules.aspx?ID=314):
 
 We'll focus mainly on the four steps outlined in bold as a template to writing our methods/functions, but first let's identify the types we need for our methods.
 
+### Creating Types
+
+We need a way to enumerate the outcomes. There are only four of these so this is relatively straightforward with a TypeScript enum.
 ```ts
-// We need a way to enumerate the outcomes. There are only four of these so this is relatively straightforward with a TypeScript enum.
 enum CheckOutcome {
     "Critical Success",
     "Success",
@@ -29,5 +31,13 @@ enum CheckOutcome {
     "Critical Failure",
 }
 ```
+We need a type to help us track Bonuses and Penalties. We won't cover the specifics of this logic in this post but another one will.
+```ts
+interface Bonus {
+    type: BonusType;
+    appliesTo: string;
+    amount: number;
+    source: string;
+}
 
 
