@@ -65,6 +65,13 @@ function MakeCheck(
       const applicableBonuses = GetBonusesFor(checkType, bonuses);
       const applicablePenalties = GetBonusesFor(checkType, penalties);
       const dieResults = RollD(20);
+      const modifiersTotal = modifiers.reduce((a, b) => a + b);
+      const calculatedResult =
+          modifiersTotal +
+          dieRoll +
+          applicableBonusesTotal +
+          applicablePenaltiesTotal;
+      return DetermineOutcome(calculatedResult, difficultyClass, dieRoll);
 }
 ```
 
