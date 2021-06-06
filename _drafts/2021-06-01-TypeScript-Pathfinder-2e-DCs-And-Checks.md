@@ -25,10 +25,10 @@ We'll focus mainly on the four steps outlined in bold as a template to writing o
 We need a way to enumerate the outcomes. There are only four of these so this is relatively straightforward with a TypeScript enum.
 ```ts
 enum CheckOutcome {
-    "Critical Success",
-    "Success",
-    "Failure",
-    "Critical Failure",
+    CriticalSuccess = "Critical Success",
+    Success = "Success",
+    Failure = "Failure",
+    CriticalFailure = "Critical Failure",
 }
 ```
 We need a type to help us track Bonuses and Penalties. We won't cover the specifics of this logic in this post but another one will.
@@ -39,5 +39,14 @@ interface Bonus {
     amount: number;
     source: string;
 }
+enum BonusType {
+    Proficiency = "Proficiency",
+    Circumstance = "Circumstance",
+    Status = "Status",
+    Item = "Item",
+    Armor = "Armor", // derived from check and speed penalties in Armor rules
+    Untyped = "Untyped",
+}
+```
 
 
