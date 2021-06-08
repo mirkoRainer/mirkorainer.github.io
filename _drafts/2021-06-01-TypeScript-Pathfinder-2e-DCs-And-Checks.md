@@ -52,7 +52,7 @@ We now have Bonuses and Penalties covered, and since Modifiers don't require any
 
 ### MakeCheck Function
 
-We'll create a function called MakeCheck that takes in an array of Modifiers, and `Bonus`es and returns a `CheckOutcome`. We'll also add the `dc` parameter for comparison and the `checkType` parameter so we can use it to filter out any Bonuses that don't apply. You may not think we need `checkType` here but when creating an entire Player Character, it's much easier to store all your Bonuses in one place. 
+We'll create a function called MakeCheck that takes in an array of Modifiers, and `Bonus`es and returns a `CheckOutcome`. We'll also add the `dc` parameter for comparison and the `checkType` parameter so we can use it to filter out any Bonuses that don't apply. You may not think we need `checkType` here but when creating an entire Player Character, it's much easier to store all your Bonuses in one place since they're so dynamic. 
 ```ts
 function MakeCheck(
     modifiers: number[],
@@ -74,6 +74,3 @@ function MakeCheck(
       return DetermineOutcome(calculatedResult, difficultyClass, dieRoll);
 }
 ```
-
-
-
