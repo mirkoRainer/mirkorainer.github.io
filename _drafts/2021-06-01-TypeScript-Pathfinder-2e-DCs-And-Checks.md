@@ -74,3 +74,20 @@ function MakeCheck(
       return DetermineOutcome(calculatedResult, difficultyClass, dieRoll);
 }
 ```
+Breaking down this function, we look at each method called in turn.
+
+First up, `GetBonusesFor`, where we pass in the `checkType` but call it `bonusFor` and a list of `bonuses` (or penalties!) to return a number -> `): **number** => {`.
+```ts
+const GetBonusesTotal = (
+    bonusFor: string,
+    bonuses: iBonus[]
+): number => {
+    const bonusesFor = bonuses.filter(
+        (bonus) => bonus.appliesTo.toLowerCase() === bonusFor.toLowerCase()
+    );
+    if (bonusesFor.length === 0) return 0;
+    const bonusTotal = DetermineBonusTotalBlog(bonusesFor);
+    return bonusTotal;
+};
+```
+In our first line of the method, we use the filter method of an array
