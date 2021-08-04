@@ -3,15 +3,29 @@ published: false
 ---
 ## Pathfinder 2e Conditions in Bevy ECS
 
+In the post we'll make an attempt at writing some boilerplate for the Pathfinder 2e Conditions using the [Rust language](https://www.rust-lang.org/) and specifically the [Bevy game engine](https://bevyengine.org/).
 
-
+### main.rs
 ```rust
+/// We need all the Bevy goodness so we import it here.
 use bevy::prelude::*;
 
-pub struct ConditionsPlugin;
+/// Our main function will run when we issue the `cargo run` command from the terminal.
+fn main() {
+    App::build()
+    	/// Here we add just the basics for Bevy to run.
+        /// This is a Default Plugin from Bevy that provides the ECS we need.
+        .add_plugins(MinimalPlugins)
+        /// This is out own Plugin that we define below.
+        .add_plugin(ConditionsPlugin)
+        .run();
+}
 
-/// This plugin is used for adding and removing conditions from entities.
-/// Conditions need to mutate the creature(entity) once but then remain “on” the character. Events trigger adding and removing conditions
+
+/// The ConditionsPlugin is used for adding and removing conditions from entities (creatures).
+/// Conditions need to mutate the creature(entity) once but then remain “on” the character. 
+/// Events will trigger adding and removing conditions
+pub struct ConditionsPlugin;
 impl Plugin for ConditionsPlugin {
     fn build(&self, app: &mut AppBuilder) {
         app.add_event::<AddConditionEvent<Flatfooted>>()
@@ -24,15 +38,15 @@ impl Plugin for ConditionsPlugin {
     }
 }
 
-#[derive(Component, Debug, Clone)]
-struct Condition<T: ConditionFunctions> {
-    applied: bool,
-    condition: T,
-}
-
 pub trait ConditionFunctions {
     fn add(&self, entity: Entity, commands: &mut Commands);
     fn remove(&self, entity: Entity, commands: &mut Commands);
+}
+
+#[derive(Debug, Clone)]
+struct Condition<T: ConditionFunctions> {
+    applied: bool,
+    condition: T,
 }
 
 /// Use this in a system to mark an entity that needs to be mutated by the condition.
@@ -79,32 +93,6 @@ fn flatfooted(mut query: Query<(Entity, &NeedsCondition<Flatfooted>)>, mut comma
     }
 }
 
-/// Event Writer system to trigger AddCondition<Flatfooted> (just keyboard for now). Just an example.
-fn flatfooted_condition_event_writer(
-    mut writer: EventWriter<AddConditionEvent<Flatfooted>>,
-    mut writer2: EventWriter<RemoveConditionEvent>,
-    query: Query<Entity, With<Condition<Flatfooted>>>,
-    keys: Res<Input<KeyCode>>,
-) {
-    if keys.just_pressed(bevy::input::prelude::KeyCode::A) {
-        let condition = Condition::<Flatfooted> {
-            applied: false,
-            condition: Flatfooted,
-        };
-        eprintln!("INPUT -- A was pressed. Firing AddConditionEvent with Flatfooted condition.");
-        let condition_event = AddConditionEvent::<Flatfooted> { condition };
-        writer.send(condition_event);
-    }
-    if keys.just_pressed(bevy::input::prelude::KeyCode::R) {
-        eprintln!("INPUT -- R was pressed. Firing RemoveConditionEvent<Flatfooted>");
-        let remove_event = RemoveConditionEvent {
-            entities: query.iter().collect(),
-        };
-        eprint!("{:?} ----", remove_event.entities);
-        writer2.send(remove_event);
-    }
-}
-
 /// Reader just to mark the entity as needing the flatfooted condition. Exmple in this case, just adds to all entities.
 fn add_flatfooted_event_reader(
     mut reader: EventReader<AddConditionEvent<Flatfooted>>,
@@ -145,6 +133,32 @@ fn remove_flatfooted_event_reader(
             };
             commands.entity(entity).remove::<Condition<Flatfooted>>();
         }
+    }
+}
+
+/// Event Writer system to trigger AddCondition<Flatfooted> (just keyboard for now). Just an example.
+fn flatfooted_condition_event_writer(
+    mut writer: EventWriter<AddConditionEvent<Flatfooted>>,
+    mut writer2: EventWriter<RemoveConditionEvent>,
+    query: Query<Entity, With<Condition<Flatfooted>>>,
+    keys: Res<Input<KeyCode>>,
+) {
+    if keys.just_pressed(bevy::input::prelude::KeyCode::A) {
+        let condition = Condition::<Flatfooted> {
+            applied: false,
+            condition: Flatfooted,
+        };
+        eprintln!("INPUT -- A was pressed. Firing AddConditionEvent with Flatfooted condition.");
+        let condition_event = AddConditionEvent::<Flatfooted> { condition };
+        writer.send(condition_event);
+    }
+    if keys.just_pressed(bevy::input::prelude::KeyCode::R) {
+        eprintln!("INPUT -- R was pressed. Firing RemoveConditionEvent<Flatfooted>");
+        let remove_event = RemoveConditionEvent {
+            entities: query.iter().collect(),
+        };
+        eprint!("{:?} ----", remove_event.entities);
+        writer2.send(remove_event);
     }
 }
 ```
